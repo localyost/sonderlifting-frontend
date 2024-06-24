@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Container, Grid, IconButton, TextField} from "@mui/material";
 import Done from '@mui/icons-material/Done';
 
-interface JudgeState {
+export interface JudgeState {
     time: number;
     weight: number;
 }
@@ -14,26 +14,30 @@ export class Judge extends React.Component<any, JudgeState> {
         this.state = { time: 60, weight: 0 };
     }
 
-    postValues() {
-        const {weight, time} = this.state;
-        const requestOptions = {
+    getPostOptions() {
+        const {time, weight} = this.state;
+        return {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ weight, time })
-        };
-        fetch('http://localhost:5000/values', requestOptions)
+        }
+    }
+
+    postValues() {
+        fetch('http://localhost:5000/values',  this.getPostOptions())
     }
 
     startTimer() {
-        const {time, weight} = this.state;
-        const requestOptions = {
+        fetch('http://localhost:5000/startTimer', this.getPostOptions())
+    }
+
+    postValidity(valid: boolean) {
+        const postOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ weight, time })
-        };
-        fetch('http://localhost:5000/values', requestOptions).then(value => {
-            fetch('http://localhost:5000/startTimer', requestOptions)
-        })
+            body: JSON.stringify({ valid })
+        }
+        fetch('http://localhost:5000/valid', postOptions)
     }
 
     render() {
@@ -64,10 +68,10 @@ export class Judge extends React.Component<any, JudgeState> {
                 <Button variant="contained" color="success" onClick={() => this.startTimer()}>
                     Start
                 </Button>
-                <Button variant="contained" color="success">
+                <Button variant="contained" color="success" onClick={event => (this.postValidity(true))}>
                     Valid
                 </Button>
-                <Button variant="outlined" color="error">
+                <Button variant="outlined" color="error" onClick={event => (this.postValidity(false))}>
                     Invalid
                 </Button>
             </Container>
