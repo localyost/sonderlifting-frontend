@@ -5,6 +5,7 @@ import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDown from '@mui/icons-material/ThumbDown';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import Paper from '@mui/material/Paper';
 
 export interface SharedState {
     time: number;
@@ -61,12 +62,8 @@ export class Judge extends React.Component<any, JudgeState> {
 
     render() {
         return (
-            <Grid
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                sx={{ backgroundColor: 'white' }}>
-                <Grid container item justifyContent="center" spacing={2}>
+            <Paper>
+                <Grid container item justifyContent="center" spacing={3}>
                     <Grid item>
                         <TextField
                             label="Weight"
@@ -83,6 +80,8 @@ export class Judge extends React.Component<any, JudgeState> {
                             id="outlined-basic"
                             label="Timer"
                             variant="outlined" />
+                    </Grid>
+                    <Grid item>
                         <IconButton aria-label="Save" onClick={() => this.postValues()}>
                             <SaveIcon fontSize="large" />
                         </IconButton>
@@ -114,7 +113,7 @@ export class Judge extends React.Component<any, JudgeState> {
                         </IconButton>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Paper>
         )
     }
 }

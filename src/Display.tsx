@@ -3,6 +3,7 @@ import {Container} from "@mui/material";
 import {io} from 'socket.io-client';
 import {SharedState} from "./Judge";
 import {ValidityImg} from "./ValidityImg";
+import Paper from "@mui/material/Paper";
 
 const socket = io("ws://localhost:5000", {
 
@@ -36,10 +37,17 @@ export class Display extends React.Component<any, DisplayState> {
     render() {
 
         return (
-            <Container maxWidth="xl" sx={{ textAlign: 'center', fontSize: '115px', backgroundColor: 'white' }}>
-                <div>{this.state.weight} kg</div>
-                <div>{this.state.time} Sek</div>
-                <ValidityImg valid={this.state.valid} />
+            <Container maxWidth="xl" sx={{ textAlign: 'center', fontSize: '115px'}}>
+                <Paper style={{padding: '10px', marginBottom: '50px'}}>
+                    {this.state.weight} kg
+                </Paper>
+                <Paper hidden={this.state.valid}>
+                    {this.state.time} Sek
+                </Paper>
+                <Paper hidden={this.state.valid === undefined}>
+                    <ValidityImg valid={this.state.valid} />
+                </Paper>
+
             </Container>
 
 
