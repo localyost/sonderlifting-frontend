@@ -41,7 +41,7 @@ export class Display extends React.Component<any, DisplayState> {
                 <Paper style={{padding: '10px', marginBottom: '50px'}}>
                     {this.state.weight} kg
                 </Paper>
-                <Paper hidden={this.state.valid}>
+                <Paper hidden={this.state.valid !== undefined}>
                     {this.state.time} Sek
                 </Paper>
                 <Paper hidden={this.state.valid === undefined}>
